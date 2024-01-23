@@ -1,15 +1,15 @@
 !/bin/bash
 
-# Deployment Script for Pimcore Application
+# Deployment Script for Pimcore Application using Docker
 
-# Pull the latest code from your repository
-git pull https://github.com/nickjabs/devops-demo
+# Define your Docker Compose file name
+DOCKER_COMPOSE_FILE="docker-compose.yml"
 
-# Build the Docker image
-docker-compose build
+# Step 1: Pull the latest code from the repository
+git pull
 
-# Start the containers
-docker-compose up -d
+# Step 2: Build the Docker images
+docker-compose -f $DOCKER_COMPOSE_FILE build
 
-# Print a success message
-echo "Pimcore application deployed successfully!"
+# Step 3: Start the containers in the background
+docker-compose -f $DOCKER_COMPOSE_FILE up -d

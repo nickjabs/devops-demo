@@ -1,4 +1,4 @@
-# Benutzerdefiniertes Docker-Image für Pimcore
+# Run PIMCORE in Benutzerdefiniertes Docker-Image für Pimcore
 
 Dieses Repository erstellt ein Docker-Image basierend auf `serversideup/php:8.2-fpm-nginx` und enthält das modifizierte Repository von [https://github.com/pimcore/demo](https://github.com/pimcore/demo).
 
