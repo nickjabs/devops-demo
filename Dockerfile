@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-#Baseimage
-FROM serversideup/php:8.2-fpm-nginx
-=======
 FROM serversideup/php:8.2-fpm-nginx
 
 RUN apt-get update && apt-get install -y \
@@ -25,4 +21,3 @@ COPY .docker/nginx.conf /etc/nginx/sites-available/pimcore.conf
 RUN ln -s /etc/nginx/sites-available/pimcore.conf /etc/nginx/sites-enabled
 
 EXPOSE 80
->>>>>>> 11.x
