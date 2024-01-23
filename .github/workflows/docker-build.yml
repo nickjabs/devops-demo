@@ -17,7 +17,12 @@ jobs:
         run: |
           echo "Building Docker image..."
           docker build -t mypimcoreimage:latest .
-          echo "Built Docker image successfully"
+          if [ $? -eq 0 ]; then
+            echo "Built Docker image successfully"
+          else
+            echo "Error: Failed to build Docker image"
+            exit 1
+          fi
 
   push:
     runs-on: ubuntu-latest
@@ -29,19 +34,34 @@ jobs:
         run: |
           echo "Logging in to Docker Hub..."
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          echo "Logged in to Docker Hub successfully"
+          if [ $? -eq 0 ]; then
+            echo "Logged in to Docker Hub successfully"
+          else
+            echo "Error: Failed to log in to Docker Hub"
+            exit 1
+          fi
 
       - name: Tag Docker image
         run: |
           echo "Tagging Docker image..."
           docker tag mypimcoreimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/mypimcoreimage:latest"
-          echo "Tagged Docker image successfully"
+          if [ $? -eq 0 ]; then
+            echo "Tagged Docker image successfully"
+          else
+            echo "Error: Failed to tag Docker image"
+            exit 1
+          fi
 
       - name: Push Docker image
         run: |
           echo "Pushing Docker image..."
           docker push "${{ secrets.DOCKERHUB_USERNAME }}/mypimcoreimage:latest"
-          echo "Pushed Docker image successfully"
+          if [ $? -eq 0 ]; then
+            echo "Pushed Docker image successfully"
+          else
+            echo "Error: Failed to push Docker image"
+            exit 1
+          fi
 
       - name: Task complete
         run: echo "Task complete"
