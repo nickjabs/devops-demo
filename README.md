@@ -1,52 +1,33 @@
-# Demo and Blue Print Application for Pimcore
+# Benutzerdefiniertes Docker-Image für Pimcore
 
-This demo package is intended to be used by Pimcore newcomers who want to learn Pimcore and see it in action. 
-It's tailored get an overview of Pimcores CMS, DAM, PIM and E-Commerce functionality and can be used as a blue print for 
-E-Commerce Applications built with Pimcore. If you are an experienced Pimcore developer, have a look at the Skeleton linked below instead.
+Dieses Repository erstellt ein Docker-Image basierend auf `serversideup/php:8.2-fpm-nginx` und enthält das modifizierte Repository von [https://github.com/pimcore/demo](https://github.com/pimcore/demo).
 
-## Getting started 
-```bash
-COMPOSER_MEMORY_LIMIT=-1 composer create-project pimcore/demo my-project
-cd ./my-project
-./vendor/bin/pimcore-install
-```
+## Verwendung
 
-- Point your virtual host to `my-project/public`
-- [Only for Apache] Create `my-project/public/.htaccess` according to https://pimcore.com/docs/platform/Pimcore/Installation_and_Upgrade/System_Setup_and_Hosting/Apache_Configuration/ 
-- Open https://your-host/admin in your browser
-- Done! 😎
+1. Stellen Sie sicher, dass Ihr Docker-Daemon aktiviert ist.
 
+2. Bauen Sie die Docker-Images:
+   ```bash
+   docker-compose build
 
-## Docker
+##
+Starten Sie die Container <code>docker-compose up -d</code>
+Installieren Sie Pimcore in den Containern <code>docker-compose exec php vendor/bin/pimcore-install --mysql-host-socket=db --mysql-username=pimcore --mysql-password=pimcore --mysql-database=pimcore
+</code>
+Überprüfen Sie im Browser, ob die Installation erfolgreich war, indem Sie </link>http://localhost</link> aufrufen.
 
-You can also use Docker to setup a new Pimcore Installation.
-You don't need to have a PHP environment with composer installed.
+## Weitere Informationen
 
-### Prerequisits
+Docker-Image: <code>serversideup/php:8.2-fpm-nginx</code>
+Originalquelle und Anleitung <code> https://serversideup.net/open-source/docker-php/docs/getting-started/installation</code>
+Pimcore Repository:<code> https://github.com/pimcore/demo</code>
 
-* Your user must be allowed to run docker commands (directly or via sudo).
-* You must have docker-compose installed.
-* Your user must be allowed to change file permissions (directly or via sudo).
+## Deployment und Automation 
 
-### Follow these steps
+Bash-Skript zur Bereitstellung der Pimcore-Anwendung <code>deploy.sh</code>
+Ausfuehren <code>./deploy.sh</code>
 
-1. Initialize the demo project using the `pimcore/pimcore` image
-    ``docker run -u `id -u`:`id -g` --rm -v `pwd`:/var/www/html pimcore/pimcore:php8.2-latest composer create-project pimcore/demo my-project``
-1. Go to your new project
-    `cd my-project/`
-1. Part of the new project is a docker compose file
-    * Run `` echo `id -u`:`id -g` `` to retrieve your local user and group id
-    * Open the `docker-compose.yaml` file in an editor, uncomment all the `user: '1000:1000'` lines and update the ids if necessary
-    * Start the needed services with `docker compose up -d`
-1. Install pimcore and initialize the DB
-    `docker compose exec php vendor/bin/pimcore-install --mysql-host-socket=db --mysql-username=pimcore --mysql-password=pimcore --mysql-database=pimcore`
-    * When asked for admin user and password: Choose freely
-    * This can take a while, up to 20 minutes
-1. :heavy_check_mark: DONE - You can now visit your pimcore-demo:
-    * The frontend: <http://localhost>
-    * The admin interface, using the credentials you have chosen above:
-      <http://localhost/admin>
+deploy your application using GitLab CI/CD.
 
 
-## Other demo/skeleton packages
-- [Pimcore Skeleton](https://github.com/pimcore/skeleton/)
+
