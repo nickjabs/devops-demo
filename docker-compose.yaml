@@ -1,8 +1,4 @@
 services:
-    redis:
-        image: redis:alpine
-        command: [ redis-server, --maxmemory, 128mb, --maxmemory-policy, volatile-lru, --save, '""' ]
-
     db:
         image: mariadb:10.11
         working_dir: /application
@@ -16,11 +12,9 @@ services:
             MYSQL_PASSWORD: pimcore
 
     php:
-        #user: '1000:1000' # set to your uid:gid
-        image: mypimcoreimage:latest
+        image: pimcore:dev
         environment:
-            LANG: en_US.UTF-8
-            LC_ALL: en_US.UTF-8
+            APP_ENV: prod
             SSL_MODE: off
             WEBUSER_HOME: /var/www/html/public
             PIMCORE_INSTALL_ADMIN_USERNAME: admin
@@ -32,7 +26,8 @@ services:
             PIMCORE_INSTALL_MYSQL_PORT: 3306
         ports:
             - "80:80"
-        #depends_on:
-        #    - db
+        depends_on:
+           - db
+
 volumes:
     pimcore-demo-database:

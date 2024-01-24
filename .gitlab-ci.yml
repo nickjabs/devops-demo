@@ -10,5 +10,10 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - chmod +x deploy.sh
-    - ./deploy.sh
+    - set -e
+    - echo "Pulling the latest code..."
+    - git pull origin main
+    - echo "Building Docker images..."
+    - docker-compose -f docker-compose.yml build
+    - echo "Starting containers in the background..."
+    - docker-compose -f docker-compose.yml up -d

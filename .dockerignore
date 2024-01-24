@@ -1,0 +1,15 @@
+.git/
+.docker/
+vendor/
+.github/
+Dockerfile
+Makefile
+docker-compose.yaml
+.editorconfig
+.gitattributes
+.gitignore
+gpl-3.0.txt
+LICENSE.md
+CONTRIBUTING.md
+README.md
+SECURITY.md
