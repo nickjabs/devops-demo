@@ -5,15 +5,20 @@ variables:
   DOCKER_REGISTRY: "https://gitlab.com/nickjabs/devops-demo"
 
 before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $DOCKER_REGISTRY
+  - apt-get update -qy
+  - apt-get install -y docker.io docker-compose
 
 deploy:
   stage: deploy
   script:
     - set -e
-    - echo "Pulling the latest code..."
-    - git pull origin main
-    - echo "Building Docker images..."
-    - docker-compose -f docker-compose.yml build
-    - echo "Starting containers in the background..."
-    - docker-compose -f docker-compose.yml up -d
+    - date +"%Y-%m-%d %H:%M:%S"
+    - echo "Logging in to Docker registry..."
+    - docker login "docker.io" -u $USER_NAME --password-stdin <<<$TOKEN
+    - echo "Current directory contents:"
+    - ls -al
+    - echo "pulling the image..."
+    - docker pull kikibuh/pimcore-demo 
+    - docker-compose up -d
+    - echo "Docker containers status:"
+    - docker ps -a

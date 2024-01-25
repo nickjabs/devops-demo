@@ -1,3 +1,4 @@
+version: '3.8'
 services:
     db:
         image: mariadb:10.11
@@ -12,7 +13,7 @@ services:
             MYSQL_PASSWORD: pimcore
 
     php:
-        image: pimcore:dev
+        image: kikibuh/pimcore-demo
         environment:
             APP_ENV: prod
             SSL_MODE: off

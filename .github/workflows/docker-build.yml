@@ -59,3 +59,15 @@ jobs:
 
       - name: Task complete
         run: echo "Task complete"
+
+  sync-with-gitlab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to GitLab
+        run: |
+          git remote add gitlab https://github.com/nickjabs/devops-demo
+          git push gitlab main
