@@ -69,5 +69,5 @@ jobs:
 
       - name: Push to GitLab
         run: |
-          git remote add gitlab https://github.com/nickjabs/devops-demo
+          git remote add gitlab git@gitlab.com:nickjabs/devops-demo.git
           git push gitlab main
