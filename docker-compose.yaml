@@ -1,34 +1,33 @@
 version: '3.8'
-services:
-    db:
-        image: mariadb:10.11
-        working_dir: /application
-        command: [ mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --innodb-file-per-table=1 ]
-        volumes:
-            - pimcore-demo-database:/var/lib/mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: ROOT
-            MYSQL_DATABASE: pimcore
-            MYSQL_USER: pimcore
-            MYSQL_PASSWORD: pimcore
 
-    php:
-        image: kikibuh/pimcore-demo
-        environment:
-            APP_ENV: prod
-            SSL_MODE: off
-            WEBUSER_HOME: /var/www/html/public
-            PIMCORE_INSTALL_ADMIN_USERNAME: admin
-            PIMCORE_INSTALL_ADMIN_PASSWORD: admin
-            PIMCORE_INSTALL_MYSQL_HOST_SOCKET: db
-            PIMCORE_INSTALL_MYSQL_USERNAME: pimcore
-            PIMCORE_INSTALL_MYSQL_PASSWORD: pimcore
-            PIMCORE_INSTALL_MYSQL_DATABASE: pimcore
-            PIMCORE_INSTALL_MYSQL_PORT: 3306
-        ports:
-            - "80:80"
-        depends_on:
-           - db
+services:
+  db:
+    image: mariadb:10.11
+    volumes:
+      - pimcore-demo-database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "ROOT"
+      MYSQL_DATABASE: "pimcore"
+      MYSQL_USER: "pimcore"
+      MYSQL_PASSWORD: "pimcore"
+
+  php:
+    image: kikibuh/pimcore-demo
+    environment:
+      APP_ENV: "prod"
+      SSL_MODE: "off"
+      WEBUSER_HOME: "/var/www/html/public"
+      PIMCORE_INSTALL_ADMIN_USERNAME: "admin"
+      PIMCORE_INSTALL_ADMIN_PASSWORD: "admin"
+      PIMCORE_INSTALL_MYSQL_HOST: "db"
+      PIMCORE_INSTALL_MYSQL_USERNAME: "pimcore"
+      PIMCORE_INSTALL_MYSQL_PASSWORD: "pimcore"
+      PIMCORE_INSTALL_MYSQL_DATABASE: "pimcore"
+      PIMCORE_INSTALL_MYSQL_PORT: 3306
+    ports:
+      - "80:80"
+    depends_on:
+      - db
 
 volumes:
-    pimcore-demo-database:
+  pimcore-demo-database:

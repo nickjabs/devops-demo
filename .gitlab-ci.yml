@@ -1,12 +1,12 @@
 stages:
   - deploy
+image: docker/compose:latest
+services:
+  - docker:dind
 
-variables:
-  DOCKER_REGISTRY: "https://gitlab.com/nickjabs/devops-demo"
-
-before_script:
-  - apt-get update -qy
-  - apt-get install -y docker.io docker-compose
+# before_script:
+#   - apk update
+#   - apk add docker-compose
 
 deploy:
   stage: deploy
@@ -14,11 +14,12 @@ deploy:
     - set -e
     - date +"%Y-%m-%d %H:%M:%S"
     - echo "Logging in to Docker registry..."
-    - docker login "docker.io" -u $USER_NAME --password-stdin <<<$TOKEN
+    # - docker login "docker.io" -u $USER_NAME --password-stdin <<<$TOKEN
     - echo "Current directory contents:"
     - ls -al
     - echo "pulling the image..."
-    - docker pull kikibuh/pimcore-demo 
+    - docker pull kikibuh/pimcore-demo
+    - docker-compose version
     - docker-compose up -d
     - echo "Docker containers status:"
     - docker ps -a
