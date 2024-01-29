@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # Deployment Script for Pimcore Application using Docker
 

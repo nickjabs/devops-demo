@@ -1,0 +1,16 @@
+---
+- name: Execute Docker Compose on Server
+  hosts: pimcore-ec2
+  become: true
+
+  tasks:
+    - name: Copy docker-compose.yaml to the server
+      copy:
+        src: ./docker-compose.yaml  
+        dest: /docker-compose.yaml  
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Execute docker-compose up -d
+      command: "docker-compose -f /docker-compose.yaml up -d"

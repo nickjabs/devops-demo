@@ -6,7 +6,10 @@ WORKDIR /var/www/html
 
 # Copy the composer.json and composer.lock files
 COPY composer.json .
-COPY composer.lock .
+COPY dev/ ./dev
+#COPY composer.lock .
+
+#COPY . .
 
 # Install dependencies using composer
 RUN composer install \

@@ -1,41 +1,36 @@
-# Run PIMCORE in Benutzerdefiniertes Docker-Image für Pimcore
+## Running PIMCORE in a Custom Docker Image for Pimcore
 
-Dieses Repository erstellt ein Docker-Image basierend auf `serversideup/php:8.2-fpm-nginx` und enthält das modifizierte Repository von [https://github.com/pimcore/demo](https://github.com/pimcore/demo).
+This repository creates a Docker image based on <code>serversideup/php:8.2-fpm-nginx </code> and includes a modified version of the repository from <code>https://github.com/pimcore/demo</code>
 
-## Verwendung
+## Usage
 
-1. Stellen Sie sicher, dass Ihr Docker-Daemon aktiviert ist.
+Ensure that your Docker daemon is running.
+Build the Docker images:
+<code>docker-compose build</code>
 
-2. Bauen Sie die Docker-Images:
-   
-   <code>docker-compose build</code>
+## Start Containers
+<code>docker-compose up -d</code>
 
-## Start Container
- <code>docker-compose up -d</code>
+## Install Pimcore 
+<code>docker-compose exec php vendor/bin/pimcore-install --mysql-host-socket=db --mysql-username=pimcore --mysql-password=pimcore --mysql-database=pimcore<code>
 
-## Install Pimcore
- in the running Container <code>docker-compose exec php vendor/bin/pimcore-install --mysql-host-socket=db --mysql-username=pimcore --mysql-password=pimcore --mysql-database=pimcore
-</code>
+## Check the Result
+Visit <link>http://localhost</link>
 
-## Check the result
- </link>http://localhost</link> aufrufen.
+## Additional Information
+Base Docker Image: <code>serversideup/php:8.2-fpm-nginx</code>
+Original Source and Instructions: <code>https://serversideup.net/open-source/docker-php/docs/getting-started/installation</code>
+Pimcore Repository: <code> https://github.com/pimcore/demo</code>
 
-## Weitere Informationen
+## Deployment and Automation
+A Bash script in the root directory for deploying the Pimcore application:<code>./deploy.sh</code>
 
-Docker-Image: <code>serversideup/php:8.2-fpm-nginx</code>
-Originalquelle und Anleitung <code> https://serversideup.net/open-source/docker-php/docs/getting-started/installation</code>
-Pimcore Repository:<code> https://github.com/pimcore/demo</code>
+## For CI/CD:
 
-## Deployment und Automation 
+<code>docker-build.yml</code> in the workflows folder: The GitHub Actions workflow builds and pushes the image to the Docker Hub repository.
+![Alt text](<.github/screens/Screenshot 2024-01-26 140132.png>)
 
-Bash-Skript in <root> directory zur Bereitstellung der Pimcore-Anwendung <code>deploy.sh</code>
-Ausfuehren <code>./deploy.sh</code>
-
-<code>docker-build.yml</code> in <code>workflows</code> the actions workflow will build and push the image to the dokcerhub repository
-
-for testing the CI Gitlab Runner i copied the repo from GitHub in the new created GitLab Account and executed <code>.gitlab-ci.yml</code> manually, which will pull the image from the docker dockerhub repo and build it erneuet.
-
-the envoroment variables credentials stored in github secrets section
-
-
-
+To test the CI Gitlab Runner, the repository was copied from GitHub to a new GitLab account, and <code>.gitlab-ci.yml</code> was manually executed. This file pulls the image from the Docker Hub repository and rebuilds it. Environment variable credentials are stored in the GitHub Secrets section.
+![Alt text](<.github/screens/Screenshot 2024-01-26 123953.png>)![Alt text](<.github/screens/Screenshot 2024-01-26 123942.png>)
+## Infrastructure
+A simple EC2 instance will be created (source in the infrastructure folder). Then, on the EC2 instance, the Ansible playbook is executed to deploy the application (source in the ansible folder).

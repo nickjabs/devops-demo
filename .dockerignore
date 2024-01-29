@@ -1,5 +1,4 @@
 .git/
-.docker/
 vendor/
 .github/
 Dockerfile
